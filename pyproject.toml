@@ -23,7 +23,7 @@ namespaces = false # to disable scanning PEP 420 namespaces (true by default)
 
 [tool.isort]
 skip = [".gitignore", ".dockerignore"]
-skip_glob = ["docs/*", ".venv/*", ".tox/*"]
+skip_glob = ["docs/*", ".venv/*", "venv/*", ".tox/*"]
 profile = "black"
 line_length = 120
 
