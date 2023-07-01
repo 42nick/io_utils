@@ -26,6 +26,12 @@ steps:
   displayName: 'tox'
 
 - script: |
+    ls
+    tree
+  displayName: 'tox'
+
+
+- script: |
     pip install pytest-azurepipelines
     # pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
     pytest
