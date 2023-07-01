@@ -42,13 +42,16 @@ def load_img(
     return img
 
 
-def save_img(path: str, img: NDArray[Union[np.uint8, np.float32]], flag_rescale_to_255: bool = False) -> None:
+def save_img(
+    path: Union[str, Path], img: NDArray[Union[np.uint8, np.float32]], flag_rescale_to_255: bool = False
+) -> None:
     if flag_rescale_to_255:
         img = (img * 255).astype(np.uint8)
 
     if img.dtype == np.float32:
         img = img.astype(np.uint8)
-    cv2.imwrite(path, img)
+
+    cv2.imwrite(path if isinstance(path, str) else path.as_posix(), img)
 
 
 def draw_boxes_on_image(
