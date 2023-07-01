@@ -1,0 +1,15 @@
+{
+    /* --------------------------------- python --------------------------------- */
+    "python.terminal.activateEnvironment": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "editor.formatOnSave": true,
+            "source.organizeImports": true
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.autoImportUserSymbols": true,
+    "python.formatting.provider": "none",
+}                    
