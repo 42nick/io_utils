@@ -50,10 +50,10 @@ disable = """
     missing-function-docstring,
     missing-module-docstring
     """
-# generated-members = """
-#     torch.*
-#     numpy.*
-#     """
+generated-members = """
+    cv2.*
+    """
+max-args = 10
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

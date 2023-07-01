@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Union
+from pathlib import Path
 
 import cv2
 import numpy as np
-from numpy.typing import NDarray
-from pathlib import Path
 
 
 def load_img(
     path: str, dsize: tuple[int, int] | None = None, grayscale: bool = False, channels_first: bool = False
-) -> NDarray[np.uint8]:
+) -> np.ndarray:
     if grayscale:
         img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     else:
@@ -25,7 +23,7 @@ def load_img(
     return img
 
 
-def save_img(path: str, img: NDarray[Union[np.uint8, np.float32]], flag_rescale_to_255: bool = False) -> None:
+def save_img(path: str, img: np.ndarray, flag_rescale_to_255: bool = False) -> None:
     if flag_rescale_to_255:
         img = (img * 255).astype(np.uint8)
 
@@ -35,22 +33,22 @@ def save_img(path: str, img: NDarray[Union[np.uint8, np.float32]], flag_rescale_
 
 
 def draw_boxes_on_image(
-    img: NDarray[np.uint8],
-    boxes: NDarray[Union[np.float32, np.uint16]],
+    img: np.ndarray,
+    boxes: np.ndarray,
     colors: tuple[int, int, int] | list[tuple[int, int, int]] = (0, 255, 0),
-    classes: list[int] | NDarray[Any] | None = None,
+    classes: list[int] | np.ndarray | None = None,
     thickness: int = 2,
-) -> NDarray[np.uint8]:
+) -> np.ndarray:
     for idx, box in enumerate(boxes):
-        x1, y1, x2, y2 = box
+        x_1, y_1, x_2, y_2 = box
         color = colors[idx] if isinstance(colors, list) else colors
 
-        img = cv2.rectangle(img, (x1, y1), (x2, y2), color, thickness=thickness)
+        img = cv2.rectangle(img, (x_1, y_1), (x_2, y_2), color, thickness=thickness)
         if classes is not None:
             img = cv2.putText(
                 img,
                 str(classes[0]),
-                (x1, y1),
+                (x_1, y_1),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5,
                 (0, 0, 0),
@@ -61,20 +59,20 @@ def draw_boxes_on_image(
 
 
 def draw_circles_on_image(
-    img: NDarray[np.uint8],
-    circles: NDarray[np.uint16],
+    img: np.ndarray,
+    circles: np.ndarray,
     colors: tuple[int, int, int] | list[tuple[int, int, int]] = (0, 255, 0),
-    classes: list[int] | NDarray[Any] | None = None,
-) -> NDarray[np.uint8]:
+    classes: list[int] | np.ndarray | None = None,
+) -> np.ndarray:
     for idx, circle in enumerate(circles):
-        x, y = circle
+        circle_x, circle_y = circle
         color = colors[idx] if isinstance(colors, list) else colors
-        img = cv2.circle(img, (x, y), 10, color, thickness=2)
+        img = cv2.circle(img, (circle_x, circle_y), 10, color, thickness=2)
         if classes is not None:
             img = cv2.putText(
                 img,
                 str(classes[0]),
-                (x, y),
+                (circle_x, circle_y),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5,
                 (0, 0, 0),
@@ -86,11 +84,11 @@ def draw_circles_on_image(
 
 def draw_on_image_and_save(
     path: str,
-    img: NDarray[np.uint8],
-    boxes: NDarray[Union[np.float32, np.uint16]] | None = None,
-    circles: NDarray[np.uint16] | None = None,
+    img: np.ndarray,
+    boxes: np.ndarray | None = None,
+    circles: np.ndarray | None = None,
     colors: tuple[int, int, int] | list[tuple[int, int, int]] = (0, 255, 0),
-    classes: list[int] | NDarray[Any] | None = None,
+    classes: list[int] | np.ndarray | None = None,
     thickness: int = 2,
 ) -> None:
     storing_path = Path(path)
