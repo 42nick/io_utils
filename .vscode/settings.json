@@ -9,6 +9,10 @@
         },
         "editor.defaultFormatter": "ms-python.black-formatter",
     },
+    // "isort.args": [
+    //     "--settings-path",
+    //     "../pyproject.toml"
+    // ],
     "python.analysis.completeFunctionParens": true,
     "python.analysis.autoImportCompletions": true,
     "python.analysis.autoImportUserSymbols": true,

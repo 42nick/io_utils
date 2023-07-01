@@ -6,8 +6,7 @@ import numpy as np
 import pytest
 from numpy.typing import NDArray
 
-from io_utils.io_image import (draw_boxes_on_image, draw_on_image_and_save,
-                               load_img, save_img)
+from io_utils.io_image import draw_boxes_on_image, draw_on_image_and_save, load_img, save_img
 
 
 def create_sample_image(path, size, color=(255, 0, 0)):

@@ -21,9 +21,9 @@ include = [
 ] # package names should match these glob patterns (["*"] by default)
 namespaces = false # to disable scanning PEP 420 namespaces (true by default)
 
-[tools.isort]
+[tool.isort]
 skip = [".gitignore", ".dockerignore"]
-skip_glob = ["docs/*"]
+skip_glob = ["docs/*", ".venv/*", ".tox/*"]
 profile = "black"
 line_length = 120
 
