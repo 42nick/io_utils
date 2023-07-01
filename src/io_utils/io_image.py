@@ -1,14 +1,33 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any, Union
 
 import cv2
 import numpy as np
+from numpy.typing import NDArray
 
 
 def load_img(
-    path: str, dsize: tuple[int, int] | None = None, grayscale: bool = False, channels_first: bool = False
-) -> np.ndarray:
+    path: str, dsize: tuple[int, int] | None = None, channels_first: bool = False, grayscale: bool = False
+) -> NDArray[np.uint8]:
+    """
+    Loads an image and performs transforms optionally.
+
+    Args:
+        path: Path to load the image from.
+        dsize: Optional. Desired target resize size with **(height, width)**.
+        grayscale: Optional flag to load the image in grayscale mode.
+        channels_first: Optional. Puts the image channel dimension first.
+
+    Returns:
+        The loaded image.
+
+    Example:
+        >>> image_path = "path/to/image.jpg"
+        >>> image = load_img(image_path, dsize=(256, 256), channels_first=True)
+    """
+
     if grayscale:
         img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     else:
@@ -23,7 +42,7 @@ def load_img(
     return img
 
 
-def save_img(path: str, img: np.ndarray, flag_rescale_to_255: bool = False) -> None:
+def save_img(path: str, img: NDArray[Union[np.uint8, np.float32]], flag_rescale_to_255: bool = False) -> None:
     if flag_rescale_to_255:
         img = (img * 255).astype(np.uint8)
 
@@ -33,12 +52,12 @@ def save_img(path: str, img: np.ndarray, flag_rescale_to_255: bool = False) -> N
 
 
 def draw_boxes_on_image(
-    img: np.ndarray,
-    boxes: np.ndarray,
+    img: NDArray[np.uint8],
+    boxes: NDArray[Union[np.uint16, np.float32]],
     colors: tuple[int, int, int] | list[tuple[int, int, int]] = (0, 255, 0),
-    classes: list[int] | np.ndarray | None = None,
+    classes: list[int] | NDArray[Any] | None = None,
     thickness: int = 2,
-) -> np.ndarray:
+) -> NDArray[np.uint8]:
     for idx, box in enumerate(boxes):
         x_1, y_1, x_2, y_2 = box
         color = colors[idx] if isinstance(colors, list) else colors
@@ -59,11 +78,11 @@ def draw_boxes_on_image(
 
 
 def draw_circles_on_image(
-    img: np.ndarray,
-    circles: np.ndarray,
+    img: NDArray[np.uint8],
+    circles: NDArray[Union[np.uint16, np.float32]],
     colors: tuple[int, int, int] | list[tuple[int, int, int]] = (0, 255, 0),
-    classes: list[int] | np.ndarray | None = None,
-) -> np.ndarray:
+    classes: list[int] | NDArray[Any] | None = None,
+) -> NDArray[np.uint8]:
     for idx, circle in enumerate(circles):
         circle_x, circle_y = circle
         color = colors[idx] if isinstance(colors, list) else colors
@@ -84,11 +103,11 @@ def draw_circles_on_image(
 
 def draw_on_image_and_save(
     path: str,
-    img: np.ndarray,
-    boxes: np.ndarray | None = None,
-    circles: np.ndarray | None = None,
+    img: NDArray[np.uint8],
+    boxes: NDArray[Union[np.uint16, np.float32]] | None = None,
+    circles: NDArray[Union[np.uint16, np.float32]] | None = None,
     colors: tuple[int, int, int] | list[tuple[int, int, int]] = (0, 255, 0),
-    classes: list[int] | np.ndarray | None = None,
+    classes: list[int] | NDArray[Any] | None = None,
     thickness: int = 2,
 ) -> None:
     storing_path = Path(path)
